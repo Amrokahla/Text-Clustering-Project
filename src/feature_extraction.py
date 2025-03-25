@@ -1,3 +1,6 @@
+import numpy as np
+import gensim.downloader as api
+from gensim.models import KeyedVectors
 from sentence_transformers import SentenceTransformer
 from sklearn.feature_extraction.text import CountVectorizer, TfidfVectorizer
 
@@ -16,7 +19,20 @@ def get_lda_features(texts, max_features=5000):
     vectorizer = CountVectorizer(max_features=max_features, stop_words="english")
     return vectorizer.fit_transform(texts), vectorizer
 
-def get_bow_features(texts, max_features=5000):
-    """Convert text into word count vectors."""
-    vectorizer = CountVectorizer(max_features=max_features, stop_words="english")
-    return vectorizer.fit_transform(texts), vectorizer
+def get_word2vec_embeddings(texts, model_name='word2vec-google-news-300', dimension=300):
+    """Generate Word2Vec embeddings for a list of texts. use 'word2vec-google-news-300'"""
+    word_vectors = api.load(model_name)
+    
+    def text_to_embedding(text):
+        words = text.split()
+        
+        valid_words = [word for word in words if word in word_vectors.key_to_index]
+        
+        if not valid_words:
+            return np.zeros(dimension)
+        
+        word_embeddings = [word_vectors[word] for word in valid_words]
+        return np.mean(word_embeddings, axis=0)
+    
+    embeddings = np.array([text_to_embedding(text) for text in texts])
+    return embeddings

@@ -11,7 +11,7 @@ from src.preprocessing import load_data, preprocess_data
 from src.feature_extraction import (
     get_sbert_embeddings, 
     get_lda_features, 
-    get_bow_features,
+    get_word2vec_embeddings,
     get_tfidf_features
 )
 from src.clustering import (
@@ -30,20 +30,24 @@ def main(args):
     df = load_data(args.input_file)
     df = preprocess_data(df)
     
-    if args.embedding == 'sbert':
-        embeddings = get_sbert_embeddings(df["text"].tolist(), model_name=args.sbert_model)
-        feature_matrix = embeddings
-    elif args.embedding == 'bow':
-        feature_matrix, _ = get_bow_features(df["text"].tolist(), max_features=args.max_features)
-        embeddings = feature_matrix.toarray()
-    elif args.embedding == 'tfidf':
-        feature_matrix, _ = get_tfidf_features(df["text"].tolist(), max_features=args.max_features)
-        embeddings = feature_matrix.toarray()
-    elif args.embedding == 'lda':
-        feature_matrix, _ = get_lda_features(df["text"].tolist(), max_features=args.max_features)
-        embeddings = feature_matrix.toarray()
-    else:
+    embedding_methods = {
+        'sbert': get_sbert_embeddings,
+        'tfidf': get_tfidf_features,
+        'lda': get_lda_features,
+        'word2vec': get_word2vec_embeddings,
+    }
+    
+    if args.embedding not in embedding_methods:
         raise ValueError(f"Unknown embedding type: {args.embedding}")
+
+    if args.embedding in ['tfidf', 'lda']:
+        feature_matrix, _ = embedding_methods[args.embedding](df["text"].tolist(), max_features=args.max_features)
+        embeddings = feature_matrix.toarray()
+    elif args.embedding in ['word2vec', 'sbert']:
+        embeddings = embedding_methods[args.embedding](
+            df["text"].tolist(), 
+            model_name=args.embedding_model if args.embedding != 'sbert' else args.sbert_model
+        )
     
     if args.method == 'kmeans':
         labels = kmeans_clustering(embeddings, n_clusters=args.n_clusters)
@@ -69,9 +73,10 @@ def parse_arguments():
     parser.add_argument('--input-file', default='data/people_wiki.csv', help='Path to input CSV file')
     parser.add_argument('--download', action='store_true', help='Download the default dataset')
     
-    parser.add_argument('--embedding', choices=['sbert', 'bow', 'tfidf', 'lda'], default='sbert', help='Embedding technique to use')
+    parser.add_argument('--embedding', choices=['sbert', 'bow', 'tfidf', 'lda', 'word2vec'], default='sbert', help='Embedding technique to use')
     parser.add_argument('--sbert-model', default='nli-roberta-base-v2', help='SBERT model to use for embeddings')
-    parser.add_argument('--max-features',  type=int, default=5000, help='Maximum number of features for BoW/TF-IDF')
+    parser.add_argument('--embedding-model', default=None, help='Specific pre-trained embedding model to use')
+    parser.add_argument('--max-features', type=int, default=5000, help='Maximum number of features for BoW/TF-IDF')
     
     parser.add_argument('--method', choices=['kmeans', 'lda'], default='kmeans', help='Clustering method to use')
     parser.add_argument('--n-clusters', type=int, default=3, help='Number of clusters for K-Means')

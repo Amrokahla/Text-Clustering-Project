@@ -49,6 +49,7 @@ The data being used is [People Wiki Data](https://drive.google.com/file/d/1_oqcP
 - `sbert`: Sentence-BERT embeddings (default)
 - `tfidf`: TF-IDF Vectorization
 - `lda`: Latent Dirichlet Allocation features
+- `word2vec`: Word2Vec embeddings `word2vec-google-news-300`
 
 ### Clustering Methods
 - `kmeans`: K-Means Clustering
@@ -69,6 +70,11 @@ python src/main.py --embedding tfidf --method kmeans --n-clusters 5
 3. SBERT with different model and LDA:
 ```bash
 python src/main.py --sbert-model all-MiniLM-L6-v2 --method lda --n-topics 7
+```
+
+4. Specify a specific Word2Vec model:
+```bash
+python src/main.py --embedding word2vec --embedding-model word2vec-google-news-300
 ```
 
 ### Customization Options
