@@ -1,19 +1,23 @@
 # Text Clustering & Topic Modeling
 
-This project applies **K-Means clustering** and **LDA topic modeling** to group similar text data, using **Sentence-BERT embeddings** for high-quality feature extraction.
+This project applies **K-Means clustering** and **LDA topic modeling** to group similar text data, using advanced embedding techniques like **Sentence-BERT**.
 
 ## Features
 
 - **Preprocessing**: Cleans text (removes URLs, punctuation, stopwords, applies stemming)
-- **Embeddings**: Uses **SBERT** for sentence representations
-- **Clustering**: K-Means for document grouping
-- **Topic Modeling**: LDA to extract dominant topics
+- **Embeddings**: 
+  - Sentence-BERT (SBERT)
+  - TF-IDF Vectorization
+  - Word2Vec embeddings
+- **Clustering**: 
+  - K-Means for document grouping
+  - Latent Dirichlet Allocation (LDA) for topic modeling
 - **Evaluation**: Silhouette Score for clustering quality
-- **Visualization**: PCA-based cluster plotting
+- **Visualization**: PCA-based cluster plotting with dimensionality reduction
 
 ## Installation & Setup
 
-It's a better practice to creat a __virtual enviroment__ before using the project
+It's a better practice to create a __virtual environment__ before using the project
 
 ### 1. Clone the Repository
 
@@ -48,7 +52,6 @@ The data being used is [People Wiki Data](https://drive.google.com/file/d/1_oqcP
 ### Embedding Techniques
 - `sbert`: Sentence-BERT embeddings (default)
 - `tfidf`: TF-IDF Vectorization
-- `lda`: Latent Dirichlet Allocation features
 - `word2vec`: Word2Vec embeddings `word2vec-google-news-300`
 
 ### Clustering Methods
@@ -67,14 +70,14 @@ python src/main.py
 python src/main.py --embedding tfidf --method kmeans --n-clusters 5
 ```
 
-3. SBERT with different model and LDA:
+3. SBERT with LDA and 7 topics:
 ```bash
-python src/main.py --sbert-model all-MiniLM-L6-v2 --method lda --n-topics 7
+python src/main.py --method lda --n-topics 7
 ```
 
-4. Specify a specific Word2Vec model:
+4. Word2Vec with K-Means:
 ```bash
-python src/main.py --embedding word2vec --embedding-model word2vec-google-news-300
+python src/main.py --embedding word2vec --method kmeans
 ```
 
 ### Customization Options
@@ -111,10 +114,10 @@ After running, you will see:
 
 ## Notes & Next Steps
 
-- Try different **embedding models** (`all-MiniLM-L6-v2`, `mpnet-base-v2`)
-- Experiment with **more clusters** (`n_clusters`)
-- Fine-tune **LDA hyperparameters** for better topic extraction
+- Experiment with different **SBERT models** (`all-MiniLM-L6-v2`, `mpnet-base-v2`)
+- Try varying number of **clusters** or **topics**
+- Fine-tune embedding and clustering parameters
 
 ## Contact & Contribution
 
-Feel free to **contribute, suggest improvements, or report issues**. 
+Feel free to **contribute, suggest improvements, or report issues**.

@@ -2,25 +2,26 @@ import numpy as np
 import gensim.downloader as api
 from gensim.models import KeyedVectors
 from sentence_transformers import SentenceTransformer
-from sklearn.feature_extraction.text import CountVectorizer, TfidfVectorizer
+from sklearn.feature_extraction.text import TfidfVectorizer
+import umap.umap_ as umap
 
-def get_sbert_embeddings(texts, model_name="nli-roberta-base-v2"):
-    """Generate SBERT embeddings for text data."""
-    model = SentenceTransformer(model_name)
-    return model.encode(texts, convert_to_numpy=True)
+def get_sbert_embeddings(texts, model_name="nli-roberta-base-v2", n_components=10):
+    """Generate SBERT embeddings with UMAP dimensionality reduction."""
+    sbert_model = SentenceTransformer(model_name)
+    embeddings = sbert_model.encode(texts, convert_to_numpy=True)
+
+    umap_reducer = umap.UMAP(n_components=n_components, random_state=42)
+    reduced_embeddings = umap_reducer.fit_transform(embeddings)
+    
+    return reduced_embeddings
 
 def get_tfidf_features(texts, max_features=5000):
     """Convert text into TF-IDF vectors."""
     vectorizer = TfidfVectorizer(max_features=max_features, stop_words="english")
     return vectorizer.fit_transform(texts), vectorizer
 
-def get_lda_features(texts, max_features=5000):
-    """Convert text into word count vectors for LDA."""
-    vectorizer = CountVectorizer(max_features=max_features, stop_words="english")
-    return vectorizer.fit_transform(texts), vectorizer
-
 def get_word2vec_embeddings(texts, model_name='word2vec-google-news-300', dimension=300):
-    """Generate Word2Vec embeddings for a list of texts. use 'word2vec-google-news-300'"""
+    """Generate Word2Vec embeddings for a list of texts."""
     word_vectors = api.load(model_name)
     
     def text_to_embedding(text):
