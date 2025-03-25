@@ -3,7 +3,8 @@ import sys
 import argparse
 import numpy as np
 import pandas as pd
-
+import warnings
+warnings.simplefilter("ignore")
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
 
 from src.download_data import download_data
