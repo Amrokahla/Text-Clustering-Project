@@ -47,12 +47,13 @@ python src/main.py
 ```
 
 This will:
-1. Load & preprocess text data
-2. Extract SBERT embeddings
-3. Cluster using K-Means
-4. Apply LDA for topic modeling
-5. Evaluate clustering performance
-6. Visualize the results
+1. download [People wiki dataset](https://drive.google.com/file/d/1_oqcPdcdM2Rf0F5VasNgxqmZBP-c50Hd/view)
+2. Load & preprocess text data
+3. Extract SBERT embeddings
+4. Cluster using K-Means
+5. Apply LDA for topic modeling
+6. Evaluate clustering performance
+7. Visualize the results
 
 ## Project Structure
 
