@@ -36,24 +36,46 @@ nltk.download("punkt")
 nltk.download("stopwords")
 ```
 
-## Running the Project
+## Dynamic Usage
 
-### Run the Pipeline
+The `main.py` script supports multiple embedding and clustering techniques:
 
-Execute the `main.py` script:
+### Data Download
+The data being used is [People Wiki Data](https://drive.google.com/file/d/1_oqcPdcdM2Rf0F5VasNgxqmZBP-c50Hd/view?usp=sharing)
 
+### Embedding Techniques
+- `sbert`: Sentence-BERT embeddings (default)
+- `tfidf`: TF-IDF Vectorization
+- `lda`: Latent Dirichlet Allocation features
+
+### Clustering Methods
+- `kmeans`: K-Means Clustering
+- `lda`: Latent Dirichlet Allocation Topic Modeling
+
+### Example Commands
+
+1. Default (SBERT embeddings with K-Means):
 ```bash
 python src/main.py
 ```
 
-This will:
-1. download [People wiki dataset](https://drive.google.com/file/d/1_oqcPdcdM2Rf0F5VasNgxqmZBP-c50Hd/view)
-2. Load & preprocess text data
-3. Extract SBERT embeddings
-4. Cluster using K-Means
-5. Apply LDA for topic modeling
-6. Evaluate clustering performance
-7. Visualize the results
+2. TF-IDF with K-Means and 5 clusters:
+```bash
+python src/main.py --embedding tfidf --method kmeans --n-clusters 5
+```
+
+3. SBERT with different model and LDA:
+```bash
+python src/main.py --sbert-model all-MiniLM-L6-v2 --method lda --n-topics 7
+```
+
+### Customization Options
+- `--input-file`: Specify a custom input CSV
+- `--embedding`: Choose embedding technique
+- `--method`: Select clustering method
+- `--n-clusters`: Set number of K-Means clusters
+- `--n-topics`: Set number of LDA topics
+- `--max-features`: Limit feature dimensions
 
 ## Project Structure
 
@@ -72,7 +94,7 @@ This will:
 ├── README.md               # Documentation
 ```
 
-## 📊 Results
+## Results
 
 After running, you will see:
 -  Cluster Assignments
