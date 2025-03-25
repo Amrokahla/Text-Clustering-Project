@@ -1,8 +1,8 @@
-# 💌 Text Clustering & Topic Modeling
+# Text Clustering & Topic Modeling
 
 This project applies **K-Means clustering** and **LDA topic modeling** to group similar text data, using **Sentence-BERT embeddings** for high-quality feature extraction.
 
-## 🚀 Features
+## Features
 
 - **Preprocessing**: Cleans text (removes URLs, punctuation, stopwords, applies stemming)
 - **Embeddings**: Uses **SBERT** for sentence representations
@@ -11,16 +11,16 @@ This project applies **K-Means clustering** and **LDA topic modeling** to group 
 - **Evaluation**: Silhouette Score for clustering quality
 - **Visualization**: PCA-based cluster plotting
 
-## 🔧 Installation & Setup
+## Installation & Setup
 
-### 1️⃣ Clone the Repository
+### 1. Clone the Repository
 
 ```bash
 git clone https://github.com/YOUR_USERNAME/YOUR_PROJECT.git
 cd YOUR_PROJECT
 ```
 
-### 2️⃣ Install Dependencies
+### 2. Install Dependencies
 
 Make sure you have Python 3.10+ installed. Then, run:
 
@@ -28,7 +28,7 @@ Make sure you have Python 3.10+ installed. Then, run:
 pip install -r requirements.txt
 ```
 
-### 3️⃣ Download NLTK Resources (One-time setup)
+### 3. Download NLTK Resources (One-time setup)
 
 ```python
 import nltk
@@ -36,7 +36,7 @@ nltk.download("punkt")
 nltk.download("stopwords")
 ```
 
-## 🚀 Running the Project
+## Running the Project
 
 ### Run the Pipeline
 
@@ -54,7 +54,7 @@ This will:
 5. Evaluate clustering performance
 6. Visualize the results
 
-## 💂️ Project Structure
+## Project Structure
 
 ```
 ├── data/                  # Datasets (raw and preprocessed)
@@ -74,20 +74,16 @@ This will:
 ## 📊 Results
 
 After running, you will see:
-- ✅ Cluster Assignments
-- ✅ Topic Distributions
-- ✅ **Visualizations of K-Means & LDA Clusters**
+-  Cluster Assignments
+-  Topic Distributions
+-  **Visualizations of K-Means & LDA Clusters**
 
-## ⚡ Notes & Next Steps
+## Notes & Next Steps
 
 - Try different **embedding models** (`all-MiniLM-L6-v2`, `mpnet-base-v2`)
 - Experiment with **more clusters** (`n_clusters`)
 - Fine-tune **LDA hyperparameters** for better topic extraction
 
-## 📩 Contact & Contribution
+## Contact & Contribution
 
 Feel free to **contribute, suggest improvements, or report issues**. 
-
-📧 Contact: [Your Email]
-
-🌟 Star the repo if you found it useful!
