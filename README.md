@@ -13,6 +13,8 @@ This project applies **K-Means clustering** and **LDA topic modeling** to group 
 
 ## Installation & Setup
 
+It's a better practice to crean a __virtual enviroment__ before using the project
+
 ### 1. Clone the Repository
 
 ```bash
