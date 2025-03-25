@@ -18,8 +18,8 @@ It's a better practice to creat a __virtual enviroment__ before using the projec
 ### 1. Clone the Repository
 
 ```bash
-git clone https://github.com/YOUR_USERNAME/YOUR_PROJECT.git
-cd YOUR_PROJECT
+git clone https://github.com/Amrokahla/Text-Clustering-Project.git
+cd Text-Clustering-Project
 ```
 
 ### 2. Install Dependencies
