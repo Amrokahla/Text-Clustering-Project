@@ -24,7 +24,8 @@ def main(args):
     embedding_methods = {
         'sbert': get_sbert_embeddings,
         'tfidf': get_tfidf_features,
-        'word2vec': get_word2vec_embeddings}
+        'glove': get_word2vec_embeddings
+    }
     
     if args.embedding not in embedding_methods:
         raise ValueError(f"Unknown embedding type: {args.embedding}")
@@ -32,10 +33,12 @@ def main(args):
     if args.embedding == 'tfidf':
         feature_matrix, _ = embedding_methods[args.embedding](df["text"].tolist(), max_features=args.max_features)
         embeddings = feature_matrix.toarray()
-    elif args.embedding in ['word2vec', 'sbert']:
+    elif args.embedding in ['glove', 'sbert']:
         embeddings = embedding_methods[args.embedding](
             df["text"].tolist(), 
-            model_name=args.embedding_model if args.embedding != 'sbert' else args.sbert_model)
+            model_name=args.embedding_model if args.embedding != 'sbert' else args.sbert_model,
+            dimension=100 if args.embedding == 'glove' else None
+        )
     
     if args.method == 'kmeans':
         labels = kmeans_clustering(embeddings, n_clusters=args.n_clusters)
@@ -60,9 +63,9 @@ def parse_arguments():
     parser.add_argument('--input-file', default='data/people_wiki.csv', help='Path to input CSV file')
     parser.add_argument('--download', action='store_true', help='Download the default dataset')
     
-    parser.add_argument('--embedding', choices=['sbert', 'tfidf', 'word2vec'], default='sbert', help='Embedding technique to use')
+    parser.add_argument('--embedding', choices=['sbert', 'tfidf', 'glove'], default='sbert', help='Embedding technique to use')
     parser.add_argument('--sbert-model', default='nli-roberta-base-v2', help='SBERT model to use for embeddings')
-    parser.add_argument('--embedding-model', default='word2vec-google-news-300', help='Specific pre-trained embedding model')
+    parser.add_argument('--embedding-model', default='glove-wiki-gigaword-100', help='Specific pre-trained embedding model')
     parser.add_argument('--max-features', type=int, default=5000, help='Maximum number of features for TF-IDF')
     
     parser.add_argument('--method', choices=['kmeans', 'lda'], default='kmeans', help='Clustering method to use')

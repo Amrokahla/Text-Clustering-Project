@@ -19,14 +19,13 @@ def get_tfidf_features(texts, max_features=5000):
     """Convert text into TF-IDF vectors."""
     vectorizer = TfidfVectorizer(max_features=max_features, stop_words="english")
     return vectorizer.fit_transform(texts), vectorizer
-
-def get_word2vec_embeddings(texts, model_name='word2vec-google-news-300', dimension=300):
-    """Generate Word2Vec embeddings for a list of texts."""
+    
+def get_word2vec_embeddings(texts, model_name='glove-wiki-gigaword-100', dimension=100):
+    """Generate Word2Vec embeddings for a list of texts (Now using GloVe)."""
     word_vectors = api.load(model_name)
     
     def text_to_embedding(text):
         words = text.split()
-        
         valid_words = [word for word in words if word in word_vectors.key_to_index]
         
         if not valid_words:
@@ -37,3 +36,4 @@ def get_word2vec_embeddings(texts, model_name='word2vec-google-news-300', dimens
     
     embeddings = np.array([text_to_embedding(text) for text in texts])
     return embeddings
+

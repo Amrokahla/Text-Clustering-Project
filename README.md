@@ -52,7 +52,7 @@ The data being used is [People Wiki Data](https://drive.google.com/file/d/1_oqcP
 ### Embedding Techniques
 - `sbert`: Sentence-BERT embeddings (default)
 - `tfidf`: TF-IDF Vectorization
-- `word2vec`: Word2Vec embeddings `word2vec-google-news-300`
+- `word2vec`: Word2Vec embeddings `glove-wiki-gigaword-100`
 
 ### Clustering Methods
 - `kmeans`: K-Means Clustering
